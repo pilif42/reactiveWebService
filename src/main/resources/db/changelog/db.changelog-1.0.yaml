@@ -1,9 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: 1466006862728-4
+      id: createTable-example
       author: pbrossier
       changes:
         - createTable:
+            tableName: account
             columns:
               - column:
                   autoIncrement: true
@@ -21,4 +22,33 @@ databaseChangeLog:
               - column:
                   name: role
                   type: VARCHAR(255)
+  - changeSet:
+      id:  loadData-example
+      author:  pbrossier
+      changes:
+        - loadData:
             tableName: account
+            columns:
+              - column:
+                  header: emailCsv
+                  name: email
+                  type: string
+              - column:
+                  header: passwordCsv
+                  name: password
+                  type: string
+              - column:
+                  header: ageCsv
+                  type: skip
+              - column:
+                  header: roleCsv
+                  name: role
+                  type: string
+            commentLineStartsWith: #
+            separator: ;
+            quotchar: ''''
+            encoding: UTF-8
+            file: ../accountsToLoad.csv
+            relativeToChangelogFile: true
+            schemaName: public
+            usePreparedStatements: true

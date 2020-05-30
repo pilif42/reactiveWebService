@@ -1,0 +1,9 @@
+emailCsv;passwordCsv;ageCsv;roleCsv
+johndoe@gmail.com;tester123;25;Tester
+# This is a comment to test that it does not upset the load.
+chrisrea@gmail.com;developer123;25;Developer
+zinedine@gmail.com;football123;35;Footballer
+jordan@gmail.com;basket123;37;Basketer
+federer@gmail.com;tennis123;35;Tennisman
+tiger@gmail.com;golf123;30;Golfer
+messi@gmail.com;foot123;30;Footballer
