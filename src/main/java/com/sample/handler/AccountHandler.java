@@ -1,5 +1,6 @@
 package com.sample.handler;
 
+import com.sample.db.repository.ReactiveAccountRepository;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -12,8 +13,17 @@ import reactor.core.publisher.Mono;
  */
 @Component
 public class AccountHandler {
+
+    private final ReactiveAccountRepository accountRepository;
+
+    public AccountHandler(ReactiveAccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
+
     public Mono<ServerResponse> getAll(ServerRequest request) {
-        // TODO Use a service to call the db.
+
+        accountRepository.findAll();
+
         return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue("{\"glossary\":{\"title\":\"example glossary\",\"GlossDiv\":{\"title\":\"S\",\"GlossList\":{\"GlossEntry\":{\"ID\":\"SGML\",\"SortAs\":\"SGML\",\"GlossTerm\":\"Standard Generalized Markup Language\",\"Acronym\":\"SGML\",\"Abbrev\":\"ISO 8879:1986\",\"GlossDef\":{\"para\":\"A meta-markup language, used to create markup languages such as DocBook.\",\"GlossSeeAlso\":[\"GML\",\"XML\"]},\"GlossSee\":\"markup\"}}}}}"));
     }
