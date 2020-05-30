@@ -5,15 +5,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
-
 import reactor.core.publisher.Mono;
 
 /**
- * To handle requests and create a response.
+ * To handle requests aimed at Accounts in the database and create a response.
  */
 @Component
-public class GreetingHandler {
-    public Mono<ServerResponse> hello(ServerRequest request) {
-        return ServerResponse.ok().contentType(MediaType.TEXT_PLAIN).body(BodyInserters.fromValue("Hello, Spring!"));
+public class AccountHandler {
+    public Mono<ServerResponse> getAll(ServerRequest request) {
+        // TODO Use a service to call the db.
+        return ServerResponse.ok().contentType(MediaType.TEXT_PLAIN).body(BodyInserters.fromValue("Hello from Accounts!"));
     }
 }

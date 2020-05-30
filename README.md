@@ -16,6 +16,7 @@ mvn clean install
 # To test:
 - http://localhost:8080/hello
     -> Hello, Spring!
+- http://localhost:8080/account
     
     
 # H2
