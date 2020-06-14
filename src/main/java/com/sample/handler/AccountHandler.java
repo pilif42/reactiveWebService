@@ -28,7 +28,7 @@ public class AccountHandler {
     public Mono<ServerResponse> getAll(ServerRequest request) {
         LOGGER.debug("Entering getAll...");
         Flux<Account> accountFlux = accountRepository.findAll();
-        // TODO Play with this flux to build a proper reactive pipeline.
+        // TODO Play with this flux to build a proper reactive pipeline. We will need a client (an example one is GreetingWebClient).
         accountFlux.doOnNext(account -> LOGGER.debug("Account retrieved is {}", account.toString()));
         return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue("{\"glossary\":{\"title\":\"example glossary\",\"GlossDiv\":{\"title\":\"S\",\"GlossList\":{\"GlossEntry\":{\"ID\":\"SGML\",\"SortAs\":\"SGML\",\"GlossTerm\":\"Standard Generalized Markup Language\",\"Acronym\":\"SGML\",\"Abbrev\":\"ISO 8879:1986\",\"GlossDef\":{\"para\":\"A meta-markup language, used to create markup languages such as DocBook.\",\"GlossSeeAlso\":[\"GML\",\"XML\"]},\"GlossSee\":\"markup\"}}}}}"));
