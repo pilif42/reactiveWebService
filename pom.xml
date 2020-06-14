@@ -25,6 +25,11 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.retry</groupId>
+			<artifactId>spring-retry</artifactId>
+		</dependency>
+
 		<!-- H2_ITEM
 		<dependency>
 			<groupId>com.h2database</groupId>
@@ -47,6 +52,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>junit</groupId>
+					<artifactId>junit</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
