@@ -31,9 +31,11 @@ When activated:
    
 # TODO
 - See TODO in AccountHandler
-        - Read:
+        - Before, read:
+               - https://spring.io/blog/2016/06/13/notes-on-reactive-programming-part-ii-writing-some-code
                - https://netflixtechblog.com/reactive-programming-in-the-netflix-api-with-rxjava-7811c3a1496a
                - https://docs.spring.io/spring-framework/docs/5.0.0.BUILD-SNAPSHOT/spring-framework-reference/html/web-reactive.html
+        - Apply back pressure and test it.
         - Solution with reactive H2: https://spring.io/guides/gs/accessing-data-r2dbc/
             - also see https://spring.io/blog/2016/11/28/going-reactive-with-spring-data
             - and maybe https://www.baeldung.com/spring-data-java-8#completablefuture?
