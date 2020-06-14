@@ -13,7 +13,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -37,7 +36,7 @@ public class ExternalApiServiceImplTest {
     private ExternalApiServiceImpl externalApiService;
 
     @Mock
-    private RestTemplate externalServiceRestTemplate;
+    private DummyServiceImpl dummyService;
 
     private RetryTemplate apiRetryTemplate;
 
@@ -61,14 +60,14 @@ public class ExternalApiServiceImplTest {
 
         final InternalCaseDto internalCaseDto = new InternalCaseDto();
         internalCaseDto.setCaseId(CASE_ID);
-        when(externalServiceRestTemplate.postForObject(POST_PATH, request, InternalCaseDto.class)).thenReturn(internalCaseDto);
+        when(dummyService.postForObject(POST_PATH, request, InternalCaseDto.class)).thenReturn(internalCaseDto);
 
         // WHEN
         CompletableFuture<InternalCaseDto> internalCaseDtoFuture = externalApiService.createInternalIssue(account);
 
         // THEN
         assertEquals(internalCaseDto, internalCaseDtoFuture.get());
-        verify(externalServiceRestTemplate, times(1)).postForObject(POST_PATH, request, InternalCaseDto.class);
+        verify(dummyService, times(1)).postForObject(POST_PATH, request, InternalCaseDto.class);
     }
 
     @Test
@@ -83,13 +82,13 @@ public class ExternalApiServiceImplTest {
         accountDto.setRole(account.getRole());
         HttpEntity<AccountDto> request = new HttpEntity<>(accountDto);
 
-        when(externalServiceRestTemplate.postForObject(POST_PATH, request, InternalCaseDto.class)).thenThrow(new RestClientException(ERROR_MSG));
+        when(dummyService.postForObject(POST_PATH, request, InternalCaseDto.class)).thenThrow(new RestClientException(ERROR_MSG));
 
         // WHEN
         Exception exception = assertThrows(RestClientException.class, () -> externalApiService.createInternalIssue(account));
         assertEquals(ERROR_MSG, exception.getMessage());
 
         // THEN
-        verify(externalServiceRestTemplate, times(MAX_ATTEMPTS)).postForObject(POST_PATH, request, InternalCaseDto.class);
+        verify(dummyService, times(MAX_ATTEMPTS)).postForObject(POST_PATH, request, InternalCaseDto.class);
     }
 }

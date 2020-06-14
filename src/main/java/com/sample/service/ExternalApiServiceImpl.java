@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -17,11 +16,11 @@ public class ExternalApiServiceImpl {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExternalApiServiceImpl.class);
 
     private final RetryTemplate apiRetryTemplate;
-    private final RestTemplate externalServiceRestTemplate;
+    private final DummyServiceImpl dummyService;
 
-    public ExternalApiServiceImpl(RetryTemplate apiRetryTemplate, RestTemplate externalServiceRestTemplate) {
+    public ExternalApiServiceImpl(RetryTemplate apiRetryTemplate, DummyServiceImpl dummyService) {
         this.apiRetryTemplate = apiRetryTemplate;
-        this.externalServiceRestTemplate = externalServiceRestTemplate;
+        this.dummyService = dummyService;
     }
 
     public CompletableFuture<InternalCaseDto> createInternalIssue(Account account) {
@@ -34,7 +33,7 @@ public class ExternalApiServiceImpl {
         final HttpEntity<AccountDto> request = new HttpEntity<>(accountDto);
 
         final InternalCaseDto internalCaseDto = apiRetryTemplate.execute(context ->
-                externalServiceRestTemplate.postForObject("/somePath", request, InternalCaseDto.class));
+                dummyService.postForObject("/somePath", request, InternalCaseDto.class));
 
         return CompletableFuture.completedFuture(internalCaseDto);
     }

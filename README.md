@@ -30,7 +30,11 @@ When activated:
     
    
 # TODO
+- org.springframework.dao.InvalidDataAccessApiUsageException: Reactive Repositories are not supported by JPA. 
+Offending repository is com.sample.db.repository.ReactiveAccountRepository!
+
 - Solution with reactive H2: https://spring.io/guides/gs/accessing-data-r2dbc/
     - also see https://spring.io/blog/2016/11/28/going-reactive-with-spring-data
     - and maybe https://www.baeldung.com/spring-data-java-8#completablefuture?
+    
 - Asynch endpoint to stream data from Azure or similar (Blob: see email). 
