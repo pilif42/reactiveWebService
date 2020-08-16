@@ -43,6 +43,7 @@ mvn clean install
         - Maybe use the below as a reference:
                 - https://spring.io/guides/gs/accessing-data-r2dbc/
                 - code is at https://github.com/spring-guides/gs-accessing-data-r2dbc/blob/master/complete/src/main/java/com/example/accessingdatar2dbc/AccessingDataR2dbcApplication.java
+- Retry & asynch endpoint: how to implement. For instance if the findAll in AccountHandler fails, how to handle it?
 - Read:
         - https://spring.io/blog/2016/06/13/notes-on-reactive-programming-part-ii-writing-some-code
         - https://netflixtechblog.com/reactive-programming-in-the-netflix-api-with-rxjava-7811c3a1496a
