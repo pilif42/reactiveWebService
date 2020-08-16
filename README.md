@@ -6,16 +6,18 @@ https://spring.io/guides/gs/reactive-rest-service/
 - When using H2:
     - Search for all 'H2_ITEM' and ensure that they are uncommented out.
     - Search for all 'Reactive_H2_ITEM' and ensure that they are commented out.
+    - The schema will be created at startup. Some data will be loaded. All items are defined in src/main/resources/db and picked up by Liquibase.
     - The console is available at http://localhost:8082/ thanks to the class com.sample.db.H2.
             - Log into it with sa / password, specifying URL JDBC = jdbc:h2:mem:testdb
-            - After startup, to verify data has been preloaded with Liquibase: select * from account
+            - To verify data has been loaded at startup: select * from account
 
 - When using Reactive H2:
     - Search for all 'Reactive_H2_ITEM' and ensure that they are uncommented out.
     - Search for all 'H2_ITEM' and ensure that they are commented out.
-    - Note that Liquibase is commented out because it does not work yet with R2DBC:
+    - Note that Liquibase is commented out because it does NOT work yet with R2DBC:
             - open ticket = https://liquibase.jira.com/browse/CORE-3419
-            - TODO: what is the alternative?
+            - The alternative is:
+                    - schema.sql in src/main/resources. Spring Boot’s auto-configuration picks it up during application startup to initialize the database schema.
     
 
 # To build:
@@ -37,7 +39,8 @@ mvn clean install
     
    
 # TODO
-- Liquibase alternative when R2DBC
+- Create a reactive endpoint to store Accounts:
+        - use https://github.com/spring-guides/gs-accessing-data-r2dbc/blob/master/complete/src/main/java/com/example/accessingdatar2dbc/AccessingDataR2dbcApplication.java
 - See TODO in AccountHandler
         - Before, read:
                - https://spring.io/blog/2016/06/13/notes-on-reactive-programming-part-ii-writing-some-code
