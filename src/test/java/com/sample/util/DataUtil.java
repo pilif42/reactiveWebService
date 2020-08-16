@@ -10,11 +10,6 @@ public class DataUtil {
     private static final String ROLE = "tester";
 
     public static Account buildAccount() {
-        Account account = new Account();
-        account.setId(ACCOUNT_ID);
-        account.setEmail(EMAIL);
-        account.setPassword(PASSWORD);
-        account.setRole(ROLE);
-        return account;
+        return Account.builder().id(ACCOUNT_ID).email(EMAIL).password(PASSWORD).role(ROLE).build();
     }
 }

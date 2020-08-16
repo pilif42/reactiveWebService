@@ -39,16 +39,13 @@ mvn clean install
     
    
 # TODO
-- Create a reactive endpoint to store Accounts:
-        - use https://github.com/spring-guides/gs-accessing-data-r2dbc/blob/master/complete/src/main/java/com/example/accessingdatar2dbc/AccessingDataR2dbcApplication.java
-- See TODO in AccountHandler
-        - Before, read:
-               - https://spring.io/blog/2016/06/13/notes-on-reactive-programming-part-ii-writing-some-code
-               - https://netflixtechblog.com/reactive-programming-in-the-netflix-api-with-rxjava-7811c3a1496a
-               - https://docs.spring.io/spring-framework/docs/5.0.0.BUILD-SNAPSHOT/spring-framework-reference/html/web-reactive.html
-        - Apply back pressure and test it.
-        - Solution with reactive H2: https://spring.io/guides/gs/accessing-data-r2dbc/
-            - also see https://spring.io/blog/2016/11/28/going-reactive-with-spring-data
-            - and maybe https://www.baeldung.com/spring-data-java-8#completablefuture?
-    
+- In AccountHandler, verify that accounts are retrieved.
+        - Maybe use the below as a reference:
+                - https://spring.io/guides/gs/accessing-data-r2dbc/
+                - code is at https://github.com/spring-guides/gs-accessing-data-r2dbc/blob/master/complete/src/main/java/com/example/accessingdatar2dbc/AccessingDataR2dbcApplication.java
+- Read:
+        - https://spring.io/blog/2016/06/13/notes-on-reactive-programming-part-ii-writing-some-code
+        - https://netflixtechblog.com/reactive-programming-in-the-netflix-api-with-rxjava-7811c3a1496a
+        - https://docs.spring.io/spring-framework/docs/5.0.0.BUILD-SNAPSHOT/spring-framework-reference/html/web-reactive.html
+        - Apply back pressure and test it.    
 - Asynch endpoint to stream data from Azure or similar (Blob: see email). 

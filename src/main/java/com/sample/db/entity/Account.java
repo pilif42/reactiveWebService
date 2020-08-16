@@ -1,5 +1,6 @@
 package com.sample.db.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 //Reactive_H2_ITEM
@@ -9,7 +10,7 @@ import org.springframework.data.annotation.Id;
 //import javax.persistence.Entity;
 //import javax.persistence.Id;
 
-@Getter @Setter
+@Getter @Setter @Builder
 //@Entity
 public class Account {
     @Id
