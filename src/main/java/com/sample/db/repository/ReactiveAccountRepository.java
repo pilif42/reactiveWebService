@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
 @Repository
-public interface ReactiveAccountRepository extends ReactiveCrudRepository<Account, String> {
+public interface ReactiveAccountRepository extends ReactiveCrudRepository<Account, Long> {
     @Query("SELECT * FROM account WHERE email = :email")
     Mono<Account> findByEmail(String email);
 
