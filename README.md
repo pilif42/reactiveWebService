@@ -14,9 +14,10 @@ mvn clean install
 
 
 # To test:
-- http://localhost:8080/hello
-    -> Hello, Spring!
-- http://localhost:8080/account
+- curl -k -v -X GET http://localhost:8080/hello -H "Accept:text/plain"
+    -> 200 and body = Hello, Spring!
+- curl -k -v -X GET http://localhost:8080/account -H "Accept:application/json"
+    -> 200 and body = {"glossary":{"title":"example glossary","GlossDiv":{"title":"S","GlossList":{"GlossEntry":{"ID":"SGML","SortAs":"SGML","GlossTerm":"Standard Generalized Markup Language","Acronym":"SGML","Abbrev":"ISO 8879:1986","GlossDef":{"para":"A meta-markup language, used to create markup languages such as DocBook.","GlossSeeAlso":["GML","XML"]},"GlossSee":"markup"}}}}}
     
     
 # H2

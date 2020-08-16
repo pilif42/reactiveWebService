@@ -16,8 +16,7 @@ public class AccountRouter {
      */
     @Bean
     public RouterFunction<ServerResponse> routeGetAll(AccountHandler accountHandler) {
-        return RouterFunctions.route(RequestPredicates.GET("/account")
-                        .and(RequestPredicates.accept(MediaType.APPLICATION_JSON)),
+        return RouterFunctions.route(RequestPredicates.GET("/account").and(RequestPredicates.accept(MediaType.APPLICATION_JSON)),
                 accountHandler::getAll);
     }
 }
