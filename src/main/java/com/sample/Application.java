@@ -29,7 +29,7 @@ public class Application {
                     Customer.builder().email("chrisrea@gmail.com").password("developer123").role("Developer").build(),
                     Customer.builder().email("zinedine@gmail.com").password("football123").role("Footballer").build(),
                     Customer.builder().email("jordan@gmail.com").password("basket123").role("Basketer").build(),
-                    Customer.builder().email("federer@gmail.com").password("tennis123").role("Tennisman").build(),
+                    Customer.builder().email("federer@gmail.com").password("tennis123").role("Tester").build(),
                     Customer.builder().email("tiger@gmail.com").password("tennis123").role("Tennisman").build(),
                     Customer.builder().email("messi@gmail.com").password("foot123").role("Footballer").build()))
                     .blockLast(Duration.ofSeconds(10));
