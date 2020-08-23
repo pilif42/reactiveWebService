@@ -10,7 +10,11 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.3.RELEASE</version>
+		<!--
+		I tried to run the same code with 2.3.3.RELEASE but the app was failing at startup with:
+		Parameter 0 of method demo in com.sample.Application required a bean named 'databaseClient' that could not be found.
+		-->
+		<version>2.2.2.RELEASE</version>
 	</parent>
 
 	<dependencies>
