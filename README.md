@@ -1,5 +1,6 @@
-# Accessing data with R2DBC
-POC put together using https://spring.io/guides/gs/accessing-data-r2dbc/
+# POC on Reactive APIs
+    - Accessing data with R2DBC was put together using https://spring.io/guides/gs/accessing-data-r2dbc/
+    - Full solution inspired from https://developer.okta.com/blog/2018/09/24/reactive-apis-with-spring-webflux
 
 
 # Reactive H2
@@ -24,7 +25,8 @@ mvn clean install
  
    
 # TODO
-- add endpoints. See https://spring.io/guides/gs/reactive-rest-service/
+- write a test for CustomerService similar to ProfileServiceTest at https://developer.okta.com/blog/2018/09/24/reactive-apis-with-spring-webflux
+- test endpoints: see AbstractBaseProfileEndpoints, etc. at https://developer.okta.com/blog/2018/09/24/reactive-apis-with-spring-webflux
 - Retry & asynch endpoint: how to implement. For instance if the findAll in AccountHandler fails, how to handle it?
 - Read:
         - https://spring.io/blog/2016/06/13/notes-on-reactive-programming-part-ii-writing-some-code
