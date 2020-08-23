@@ -26,6 +26,7 @@ mvn clean install
    
 # TODO
 - write a test for CustomerService similar to ProfileServiceTest at https://developer.okta.com/blog/2018/09/24/reactive-apis-with-spring-webflux
+- add classic endpoints as with ProfileRestController at https://developer.okta.com/blog/2018/09/24/reactive-apis-with-spring-webflux
 - test endpoints: see AbstractBaseProfileEndpoints, etc. at https://developer.okta.com/blog/2018/09/24/reactive-apis-with-spring-webflux
 - Retry & asynch endpoint: how to implement. For instance if the findAll in AccountHandler fails, how to handle it?
 - Read:
