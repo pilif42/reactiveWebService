@@ -28,6 +28,10 @@ public class CustomerHandler {
         return defaultWriteResponse(flux);
     }
 
+    public Mono<ServerResponse> getAll(ServerRequest r) {
+        return defaultReadResponse(this.customerService.findAll());
+    }
+
     private static Mono<ServerResponse> defaultWriteResponse(Publisher<Customer> customers) {
         return Mono.from(customers).flatMap(customer -> ServerResponse
                         .created(URI.create("/customers/" + customer.getId()))
@@ -36,11 +40,10 @@ public class CustomerHandler {
                 );
     }
 
-
-//    private static Mono<ServerResponse> defaultReadResponse(Publisher<Customer> customers) {
-//        return ServerResponse
-//                .ok()
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .body(customers, CustomerDto.class);
-//    }
+    private static Mono<ServerResponse> defaultReadResponse(Publisher<Customer> customers) {
+        return ServerResponse
+                .ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(customers, CustomerDto.class);
+    }
 }

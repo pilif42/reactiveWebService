@@ -7,6 +7,7 @@ import org.springframework.web.reactive.function.server.RequestPredicate;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
+import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
 import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
@@ -14,7 +15,8 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 public class CustomerRouter {
     @Bean
     RouterFunction<ServerResponse> routes(CustomerHandler handler) {
-        return route(i(POST("/profiles")), handler::createCustomer);
+        return route(i(POST("/customers")), handler::createCustomer)
+                .andRoute(i(GET("/customers")), handler::getAll);
     }
 
 
