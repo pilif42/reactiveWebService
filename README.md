@@ -4,14 +4,9 @@
 
 
 # Reactive H2
-Liquibase does NOT work yet with R2DBC:
-    - open ticket = https://liquibase.jira.com/browse/CORE-3419
-    - The alternative is:
-            - schema.sql in src/main/resources. Spring Boot’s auto-configuration picks it up during application startup to initialize the database schema.
-            - And, we populate the table customer:
-                    - in demo of Application
-                    - or in hello of GreetingHandler.
-    
+- Liquibase does NOT work yet with R2DBC. See open ticket https://liquibase.jira.com/browse/CORE-3419
+- The database is primed at startup thanks to SampleDataInitializer.
+
 
 # To build:
 mvn clean install
@@ -22,7 +17,12 @@ mvn clean install
        - pointing to Application
        - VM Options = -Dspring.profiles.active=dev
 - Or: mvn clean package spring-boot:run -DskipTests=true -Dspring-boot.run.profiles=dev
- 
+
+
+# To test:
+- curl -k -v -H "Content-Type: application/json" -d '{"email":"zz@email.com", "password":"pwd1", "role":"Developer"}' -X POST http://localhost:8080/profiles
+    - 201
+
    
 # TODO
 - write a test for CustomerService similar to ProfileServiceTest at https://developer.okta.com/blog/2018/09/24/reactive-apis-with-spring-webflux
@@ -35,11 +35,3 @@ mvn clean install
         - https://docs.spring.io/spring-framework/docs/5.0.0.BUILD-SNAPSHOT/spring-framework-reference/html/web-reactive.html
         - Apply back pressure and test it.    
 - Asynch endpoint to stream data from Azure or similar (Blob: see email). 
-
-
-# TODO - To test:
-# - curl -k -v -X GET http://localhost:8080/hello -H "Accept:text/plain"
-#     -> 200 and body = Accounts have now been stored. Ready to rumble!
-# - curl -k -v -X GET http://localhost:8080/customer -H "Accept:application/json"
-#     -> 200 and body = {"glossary":{"title":"example glossary","GlossDiv":{"title":"S","GlossList":{"GlossEntry":{"ID":"SGML","SortAs":"SGML","GlossTerm":"Standard Generalized Markup Language","Acronym":"SGML","Abbrev":"ISO 8879:1986","GlossDef":{"para":"A meta-markup language, used to create markup languages such as DocBook.","GlossSeeAlso":["GML","XML"]},"GlossSee":"markup"}}}}}
-   
