@@ -10,6 +10,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,6 +20,7 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER
 @DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
 @SpringBootTest
 public class CustomerServiceITTest {
+
     @Autowired
     private CustomerService customerService;
     @Autowired
@@ -52,7 +55,15 @@ public class CustomerServiceITTest {
                 Customer.builder().email("c@gmail.com").password("c").role("testerC").build()));
         saved.blockLast();  // Required so the 3 new customers have the time to be saved before findAll() is called on customerService.
 
-        Predicate<Customer> match = customer -> saved.any(saveItem -> saveItem.equals(customer)).block();
+        List<Customer> expectedCustomers = new ArrayList<>();
+        expectedCustomers.add(Customer.builder().id(1L).email("A@email.com").password("tester123").role("Tester").build());
+        expectedCustomers.add(Customer.builder().id(2L).email("B@email.com").password("tester123").role("Tester").build());
+        expectedCustomers.add(Customer.builder().id(3L).email("C@email.com").password("tester123").role("Tester").build());
+        expectedCustomers.add(Customer.builder().id(4L).email("D@email.com").password("tester123").role("Tester").build());
+        expectedCustomers.add(Customer.builder().id(5L).email("a@gmail.com").password("a").role("testerA").build());
+        expectedCustomers.add(Customer.builder().id(6L).email("b@gmail.com").password("b").role("testerB").build());
+        expectedCustomers.add(Customer.builder().id(7L).email("c@gmail.com").password("c").role("testerC").build());
+        Predicate<Customer> match = customer -> expectedCustomers.contains(customer);
 
         // WHEN
         Flux<Customer> foundCustomers = customerService.findAll();
@@ -61,23 +72,16 @@ public class CustomerServiceITTest {
         Long nbOfSavedCustomers = foundCustomers.count().block();
         assertEquals(7, nbOfSavedCustomers);    // 4 from SampleDataInitializer + 3 from our GIVEN
 
-        /**
-         * TODO The below was what was found in the tutorial. It does not seem to be a good test though.
-         * TODO The 4 on L59 is our 4 customers stored previously by SampleDataInitializer. Instead, we want to assert
-         * TODO on the ones created at L49.
-         *
-         * TODO Check what the thenMany really does as it seems that the test returns saved on findAll() to then assert
-         * TODO that it is saved. Rather pointless. Instead, we should ensure that the saving done on L49 does work.
-         */
-
-//        Flux<Customer> composite = customerService.findAll().thenMany(saved);
-
-        // THEN
-//        StepVerifier
-//                .create(composite)
-//                .expectNextMatches(match)
-//                .expectNextMatches(match)
-//                .expectNextMatches(match)
-//                .verifyComplete();
+        // TODO More elegant way than these 7 expectNextMatches
+        // TODO Better assertions to verify that we really get the full 7 expected items. Currently, we good get 7 times the id=1 and it would pass.
+        StepVerifier.create(foundCustomers)
+                .expectNextMatches(match)
+                .expectNextMatches(match)
+                .expectNextMatches(match)
+                .expectNextMatches(match)
+                .expectNextMatches(match)
+                .expectNextMatches(match)
+                .expectNextMatches(match)
+                .verifyComplete();
     }
 }
