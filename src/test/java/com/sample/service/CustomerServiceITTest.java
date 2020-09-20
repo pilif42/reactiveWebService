@@ -50,13 +50,16 @@ public class CustomerServiceITTest {
                 Customer.builder().email("a@gmail.com").password("a").role("testerA").build(),
                 Customer.builder().email("b@gmail.com").password("b").role("testerB").build(),
                 Customer.builder().email("c@gmail.com").password("c").role("testerC").build()));
+        saved.blockLast();  // Required so the 3 new customers have the time to be saved before findAll() is called on customerService.
+
         Predicate<Customer> match = customer -> saved.any(saveItem -> saveItem.equals(customer)).block();
 
         // WHEN
-        Mono<Long> composite = customerService.findAll().count();
+        Flux<Customer> foundCustomers = customerService.findAll();
 
-        Long nbSavedCustomers = composite.block();
-        assertEquals(4, nbSavedCustomers);
+        // THEN
+        Long nbOfSavedCustomers = foundCustomers.count().block();
+        assertEquals(7, nbOfSavedCustomers);    // 4 from SampleDataInitializer + 3 from our GIVEN
 
         /**
          * TODO The below was what was found in the tutorial. It does not seem to be a good test though.
