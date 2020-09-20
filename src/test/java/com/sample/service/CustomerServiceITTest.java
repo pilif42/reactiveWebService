@@ -5,7 +5,6 @@ import com.sample.db.repository.ReactiveCustomerRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
@@ -13,7 +12,6 @@ import reactor.test.StepVerifier;
 import java.util.function.Predicate;
 
 @SpringBootTest
-@Import(CustomerService.class)
 public class CustomerServiceITTest {
     @Autowired
     private CustomerService customerService;
