@@ -25,6 +25,6 @@ public class CustomerService {
     public Mono<Customer> create(String email, String password, String role) {
         return reactiveCustomerRepository
                 .save(Customer.builder().email(email).role(role).password(password).build())
-                .doOnSuccess(profile -> publisher.publishEvent(new CustomerCreatedEvent(profile)));
+                .doOnSuccess(customer -> publisher.publishEvent(new CustomerCreatedEvent(customer)));
     }
 }

@@ -1,6 +1,6 @@
 # POC on Reactive APIs
-    - Accessing data with R2DBC was put together using https://spring.io/guides/gs/accessing-data-r2dbc/
-    - Full solution inspired from https://developer.okta.com/blog/2018/09/24/reactive-apis-with-spring-webflux
+- Accessing data with R2DBC was put together using https://spring.io/guides/gs/accessing-data-r2dbc/
+- Full solution inspired from https://developer.okta.com/blog/2018/09/24/reactive-apis-with-spring-webflux
 
 
 # Reactive H2
