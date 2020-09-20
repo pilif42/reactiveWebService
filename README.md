@@ -29,8 +29,8 @@ mvn clean install
  
 # TODO
 - TODOs in CustomerServiceITTest (used ProfileServiceTest at https://developer.okta.com/blog/2018/09/24/reactive-apis-with-spring-webflux)
-        - tests run OK on their own but not together. USe DirtiesContext or clear up the db b4 a test?
         - assertions on 3 new customers in findAll_saveThreeCustomers_expectTheseBack
+- have a schema.sql for the integ. tests. And another one (without the DROP TABLE IF EXISTS customer) for the real run.
 - read https://projectreactor.io/docs/core/release/reference/index.html#which-operator
 - test with a WebClient. So far, we have only tested with curl.
         - how do we access the 5 in Location: /customers/5 when a POST is made?

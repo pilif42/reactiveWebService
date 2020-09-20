@@ -13,9 +13,9 @@ import reactor.test.StepVerifier;
 import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_CLASS;
+import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
 
-@DirtiesContext(classMode = BEFORE_CLASS)
+@DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
 @SpringBootTest
 public class CustomerServiceITTest {
     @Autowired
