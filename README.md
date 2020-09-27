@@ -31,7 +31,7 @@ mvn clean install
  
 # TODO
 - read https://projectreactor.io/docs/core/release/reference/index.html#which-operator
-- test with a WebClient. So far, we have only tested with curl.
+- test the 2 endpoints (POST & GET) with a WebClient. So far, we have only tested with curl.
         - how do we access the 5 in Location: /customers/5 when a POST is made?
 - do we need classic endpoints as with ProfileRestController at https://developer.okta.com/blog/2018/09/24/reactive-apis-with-spring-webflux
         - test endpoints: see AbstractBaseProfileEndpoints, etc. at https://developer.okta.com/blog/2018/09/24/reactive-apis-with-spring-webflux
