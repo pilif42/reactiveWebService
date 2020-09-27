@@ -1,11 +1,13 @@
 # POC on Reactive APIs
-- Accessing data with R2DBC was put together using https://spring.io/guides/gs/accessing-data-r2dbc/
-- Full solution inspired from https://developer.okta.com/blog/2018/09/24/reactive-apis-with-spring-webflux
+- Accessing data with R2DBC was put together using https://spring.io/guides/gs/accessing-data-r2dbc/ and https://developer.okta.com/blog/2018/09/24/reactive-apis-with-spring-webflux
 
 
 # Reactive H2
 - Liquibase does NOT work yet with R2DBC. See open ticket https://liquibase.jira.com/browse/CORE-3419
-- The database is primed at startup thanks to SampleDataInitializer.
+    - however, https://docs.spring.io/spring-boot/docs/2.3.0.M3/reference/htmlsingle/#boot-features-r2dbc mentions it?
+- At startup:
+    - the table customer is created thanks to initializer in DbConfig.
+    - the table customer is then populated in SampleDataInitializer.
 
 
 # To build:
@@ -28,7 +30,6 @@ mvn clean install
 
  
 # TODO
-- have a schema.sql for the integ. tests. And another one (without the DROP TABLE IF EXISTS customer) for the real run.
 - read https://projectreactor.io/docs/core/release/reference/index.html#which-operator
 - test with a WebClient. So far, we have only tested with curl.
         - how do we access the 5 in Location: /customers/5 when a POST is made?
