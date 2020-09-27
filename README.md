@@ -1,5 +1,8 @@
 # POC on Reactive APIs
-- Accessing data with R2DBC was put together using https://spring.io/guides/gs/accessing-data-r2dbc/ and https://developer.okta.com/blog/2018/09/24/reactive-apis-with-spring-webflux
+Accessing data with R2DBC was put together using:
+    - https://spring.io/guides/gs/accessing-data-r2dbc/ 
+    - https://developer.okta.com/blog/2018/09/24/reactive-apis-with-spring-webflux
+    - https://projectreactor.io/docs/core/release/reference/index.html#which-operator
 
 
 # Reactive H2
@@ -30,9 +33,11 @@ mvn clean install
 
  
 # TODO
-- read https://projectreactor.io/docs/core/release/reference/index.html#which-operator
-- test the 2 endpoints (POST & GET) with a WebClient. So far, we have only tested with curl.
+- test the 2 endpoints (POST & GET) with a WebClient (in a different project to separate concerns: reactiveWebClient?)
+        - maybe use https://www.baeldung.com/spring-5-webclient as a pointer?
         - how do we access the 5 in Location: /customers/5 when a POST is made?
+        - use subscribe on the GET results: examples at https://projectreactor.io/docs/core/release/reference/index.html#_subscribe_method_examples
+- play with the backpressure: https://projectreactor.io/docs/core/release/reference/index.html#_on_backpressure_and_ways_to_reshape_requests
 - do we need classic endpoints as with ProfileRestController at https://developer.okta.com/blog/2018/09/24/reactive-apis-with-spring-webflux
         - test endpoints: see AbstractBaseProfileEndpoints, etc. at https://developer.okta.com/blog/2018/09/24/reactive-apis-with-spring-webflux
 - Retry & asynch endpoint: how to implement. For instance if the createCustomer in CustomerHandler fails, how to handle it?
