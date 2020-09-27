@@ -28,7 +28,6 @@ mvn clean install
 
  
 # TODO
-- TODOs in CustomerServiceITTest (used ProfileServiceTest at https://developer.okta.com/blog/2018/09/24/reactive-apis-with-spring-webflux)
 - have a schema.sql for the integ. tests. And another one (without the DROP TABLE IF EXISTS customer) for the real run.
 - read https://projectreactor.io/docs/core/release/reference/index.html#which-operator
 - test with a WebClient. So far, we have only tested with curl.

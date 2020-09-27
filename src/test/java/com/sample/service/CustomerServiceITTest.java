@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
 
 @DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
@@ -66,22 +67,13 @@ public class CustomerServiceITTest {
         Predicate<Customer> match = customer -> expectedCustomers.contains(customer);
 
         // WHEN
-        Flux<Customer> foundCustomers = customerService.findAll();
+        Flux<Customer> foundCustomersFlux = customerService.findAll();
 
         // THEN
-        Long nbOfSavedCustomers = foundCustomers.count().block();
+        Long nbOfSavedCustomers = foundCustomersFlux.count().block();
         assertEquals(7, nbOfSavedCustomers);    // 4 from SampleDataInitializer + 3 from our GIVEN
 
-        // TODO More elegant way than these 7 expectNextMatches
-        // TODO Better assertions to verify that we really get the full 7 expected items. Currently, we good get 7 times the id=1 and it would pass.
-        StepVerifier.create(foundCustomers)
-                .expectNextMatches(match)
-                .expectNextMatches(match)
-                .expectNextMatches(match)
-                .expectNextMatches(match)
-                .expectNextMatches(match)
-                .expectNextMatches(match)
-                .expectNextMatches(match)
-                .verifyComplete();
+        List<Customer> foundCustomersList = foundCustomersFlux.collectList().block();
+        assertTrue(foundCustomersList.containsAll(expectedCustomers));
     }
 }
