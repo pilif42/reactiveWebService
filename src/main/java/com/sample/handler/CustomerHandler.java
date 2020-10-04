@@ -28,7 +28,7 @@ public class CustomerHandler {
         return defaultWriteResponse(flux);
     }
 
-    public Mono<ServerResponse> getAll(ServerRequest r) {
+    public Mono<ServerResponse> getAll(ServerRequest request) {
         return defaultReadResponse(this.customerService.findAll());
     }
 
