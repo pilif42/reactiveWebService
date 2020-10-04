@@ -35,6 +35,7 @@ mvn clean install
 
  
 # TODO
+- POST body validation: what if I do not give a valid CustomerDto -> add some javax validation on at least one field?
 - play with the backpressure: https://projectreactor.io/docs/core/release/reference/index.html#_on_backpressure_and_ways_to_reshape_requests
 - do we need classic endpoints as with ProfileRestController at https://developer.okta.com/blog/2018/09/24/reactive-apis-with-spring-webflux
         - test endpoints: see AbstractBaseProfileEndpoints, etc. at https://developer.okta.com/blog/2018/09/24/reactive-apis-with-spring-webflux

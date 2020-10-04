@@ -3,6 +3,7 @@ package com.sample.handler;
 import com.sample.db.entity.Customer;
 import com.sample.dto.CustomerDto;
 import com.sample.service.CustomerService;
+import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import reactor.core.publisher.Mono;
 
 import java.net.URI;
 
+@Slf4j
 @Component
 public class CustomerHandler {
     private final CustomerService customerService;
@@ -25,6 +27,7 @@ public class CustomerHandler {
         Flux<Customer> flux = request
                 .bodyToFlux(CustomerDto.class)
                 .flatMap(customerDto -> customerService.create(customerDto.getEmail(), customerDto.getPassword(), customerDto.getRole()));
+        log.debug("Handled createCustomer.");
         return defaultWriteResponse(flux);
     }
 
