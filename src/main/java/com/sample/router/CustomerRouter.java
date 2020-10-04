@@ -16,7 +16,8 @@ public class CustomerRouter {
     @Bean
     RouterFunction<ServerResponse> routes(CustomerHandler handler) {
         return route(i(POST("/customers")), handler::createCustomer)
-                .andRoute(i(GET("/customers")), handler::getAll);
+                .andRoute(i(GET("/customers")), handler::getAll)
+                .andRoute(i(GET("/customers/{id}")), handler::getOne);
     }
 
 

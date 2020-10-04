@@ -22,6 +22,10 @@ public class CustomerService {
         return reactiveCustomerRepository.findAll();
     }
 
+    public Mono<Customer> findOne(String id) {
+        return reactiveCustomerRepository.findById(Long.valueOf(id));
+    }
+
     public Mono<Customer> create(String email, String password, String role) {
         return reactiveCustomerRepository
                 .save(Customer.builder().email(email).role(role).password(password).build())

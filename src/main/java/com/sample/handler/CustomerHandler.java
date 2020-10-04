@@ -32,6 +32,10 @@ public class CustomerHandler {
         return defaultReadResponse(this.customerService.findAll());
     }
 
+    public Mono<ServerResponse> getOne(ServerRequest request) {
+        return defaultReadResponse((this.customerService.findOne(request.pathVariable("id"))));
+    }
+
     private static Mono<ServerResponse> defaultWriteResponse(Publisher<Customer> customers) {
         return Mono.from(customers).flatMap(customer -> ServerResponse
                         .created(URI.create("/customers/" + customer.getId()))
