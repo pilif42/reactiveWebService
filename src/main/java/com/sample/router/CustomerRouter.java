@@ -15,9 +15,9 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 public class CustomerRouter {
     @Bean
     RouterFunction<ServerResponse> routes(CustomerWithValidationHandler handler) {
-        return route(i(POST("/customers")), handler::createCustomer)
-                .andRoute(i(GET("/customers")), handler::getAll)
-                .andRoute(i(GET("/customers/{id}")), handler::getOne);
+        return route(i(POST("/customers")), handler::handlePost)
+                .andRoute(i(GET("/customers")), handler::handleGetAll)
+                .andRoute(i(GET("/customers/{id}")), handler::handleGetOne);
     }
 
     private static RequestPredicate i(RequestPredicate target) {

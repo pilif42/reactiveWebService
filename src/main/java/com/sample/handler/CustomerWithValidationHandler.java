@@ -27,18 +27,16 @@ public class CustomerWithValidationHandler extends AbstractValidationHandler<Cus
 
     @Override
     protected Mono<ServerResponse> processBody(CustomerDto validBody, ServerRequest originalRequest) {
-        Mono<Customer> flux = originalRequest
-                .bodyToMono(CustomerDto.class)
-                .flatMap(customerDto -> customerService.create(customerDto.getEmail(), customerDto.getPassword(), customerDto.getRole()));
+        Mono<Customer> response = customerService.create(validBody.getEmail(), validBody.getPassword(), validBody.getRole());
         log.debug("Handled createCustomer.");
-        return defaultWriteResponse(flux);
+        return defaultWriteResponse(response);
     }
 
-    public Mono<ServerResponse> getAll(ServerRequest request) {
+    public Mono<ServerResponse> handleGetAll(ServerRequest request) {
         return defaultReadResponse(this.customerService.findAll());
     }
 
-    public Mono<ServerResponse> getOne(ServerRequest request) {
+    public Mono<ServerResponse> handleGetOne(ServerRequest request) {
         return defaultReadResponse((this.customerService.findOne(request.pathVariable("id"))));
     }
 

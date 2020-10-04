@@ -20,7 +20,7 @@ public abstract class AbstractValidationHandler<T, U extends Validator> {
         this.validator = validator;
     }
 
-    public final Mono<ServerResponse> createCustomer(final ServerRequest request) {
+    public final Mono<ServerResponse> handlePost(final ServerRequest request) {
         return request.bodyToMono(this.classToValidate)
                 .flatMap(body -> {
                     Errors errors = new BeanPropertyBindingResult(body, this.classToValidate.getName());
