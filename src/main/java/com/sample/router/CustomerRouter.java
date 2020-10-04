@@ -1,6 +1,6 @@
 package com.sample.router;
 
-import com.sample.handler.CustomerHandler;
+import com.sample.handler.CustomerWithValidationHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.RequestPredicate;
@@ -14,12 +14,11 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 @Configuration
 public class CustomerRouter {
     @Bean
-    RouterFunction<ServerResponse> routes(CustomerHandler handler) {
+    RouterFunction<ServerResponse> routes(CustomerWithValidationHandler handler) {
         return route(i(POST("/customers")), handler::createCustomer)
                 .andRoute(i(GET("/customers")), handler::getAll)
                 .andRoute(i(GET("/customers/{id}")), handler::getOne);
     }
-
 
     private static RequestPredicate i(RequestPredicate target) {
         return new CaseInsensitiveRequestPredicate(target);

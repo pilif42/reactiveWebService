@@ -7,25 +7,28 @@ import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.Validator;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
 
 @Slf4j
 @Component
-public class CustomerHandler {
+public class CustomerWithValidationHandler extends AbstractValidationHandler<CustomerDto, Validator> {
+
     private final CustomerService customerService;
 
-    public CustomerHandler(CustomerService customerService) {
+    public CustomerWithValidationHandler(Validator validator, CustomerService customerService) {
+        super(CustomerDto.class, validator);
         this.customerService = customerService;
     }
 
-    public Mono<ServerResponse> createCustomer(ServerRequest request) {
-        Flux<Customer> flux = request
-                .bodyToFlux(CustomerDto.class)
+    @Override
+    protected Mono<ServerResponse> processBody(CustomerDto validBody, ServerRequest originalRequest) {
+        Mono<Customer> flux = originalRequest
+                .bodyToMono(CustomerDto.class)
                 .flatMap(customerDto -> customerService.create(customerDto.getEmail(), customerDto.getPassword(), customerDto.getRole()));
         log.debug("Handled createCustomer.");
         return defaultWriteResponse(flux);
@@ -40,11 +43,12 @@ public class CustomerHandler {
     }
 
     private static Mono<ServerResponse> defaultWriteResponse(Publisher<Customer> customers) {
-        return Mono.from(customers).flatMap(customer -> ServerResponse
-                        .created(URI.create("/customers/" + customer.getId()))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .build()
-                );
+        Mono<ServerResponse> result = Mono.from(customers).flatMap(customer -> ServerResponse
+                .created(URI.create("/customers/" + customer.getId()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .build()
+        );
+        return result;
     }
 
     private static Mono<ServerResponse> defaultReadResponse(Publisher<Customer> customers) {
