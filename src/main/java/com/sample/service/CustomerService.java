@@ -22,8 +22,8 @@ public class CustomerService {
         return reactiveCustomerRepository.findAll();
     }
 
-    public Mono<Customer> findOne(String id) {
-        return reactiveCustomerRepository.findById(Long.valueOf(id));
+    public Mono<Customer> findOne(Long id) {
+        return reactiveCustomerRepository.findById(id);
     }
 
     public Mono<Customer> create(String email, String password, String role) {

@@ -10,6 +10,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import reactor.core.publisher.Mono;
 
+import static java.lang.String.format;
+
 public abstract class AbstractValidationHandler<T, U extends Validator> {
 
     private final Class<T> classToValidate;
@@ -27,16 +29,31 @@ public abstract class AbstractValidationHandler<T, U extends Validator> {
                     this.validator.validate(body, errors);
 
                     if (errors == null || errors.getAllErrors().isEmpty()) {
-                        return processBody(body, request);
+                        return processBodyFromPost(body, request);
                     } else {
                         return onValidationErrors(errors, body, request);
                     }
                 });
     }
 
+    public final Mono<ServerResponse> handleGetOne(final ServerRequest request) {
+        String id = request.pathVariable("id");
+        try {
+            return processGetOne(Long.parseLong(id));
+        } catch (NumberFormatException e) {
+            return onValidationErrors(format("%s is not a Long.", id));
+        }
+    }
+
     protected Mono<ServerResponse> onValidationErrors(Errors errors, T invalidBody, final ServerRequest request) {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errors.getAllErrors().toString());
     }
 
-    abstract protected Mono<ServerResponse> processBody(T validBody, final ServerRequest originalRequest);
+    protected Mono<ServerResponse> onValidationErrors(String errorMessage) {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errorMessage);
+    }
+
+    abstract protected Mono<ServerResponse> processBodyFromPost(T validBody, final ServerRequest originalRequest);
+
+    abstract protected Mono<ServerResponse> processGetOne(Long id);
 }
