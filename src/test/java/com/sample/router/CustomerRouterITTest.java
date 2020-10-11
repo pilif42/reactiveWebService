@@ -1,10 +1,13 @@
 package com.sample.router;
 
+import com.sample.dto.CustomerDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.web.reactive.function.BodyInserters;
+import reactor.core.publisher.Mono;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -94,6 +97,29 @@ public class CustomerRouterITTest {
                 .build()
                 .get()
                 .uri("/customers/a")
+                .exchange()
+                .expectStatus()
+                .isBadRequest().expectBody(Map.class)
+                .value(map -> map.equals(result), equalTo(true));
+    }
+
+    @Test
+    public void testPost_expectBadRequestReturnCode() {
+        // GIVEN
+        CustomerDto customerDto = new CustomerDto();
+        customerDto.setEmail("joeblogg@gmail.com");
+        customerDto.setPassword("integtest");
+
+        Map result = new LinkedHashMap();
+        result.put("message", "[Field error in object 'com.sample.dto.CustomerDto' on field 'role': rejected value [null]; codes [NotBlank.com.sample.dto.CustomerDto.role,NotBlank.role,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [com.sample.dto.CustomerDto.role,role]; arguments []; default message [role]]; default message [must not be blank]]");
+
+        // WHEN & THEN
+        WebTestClient.bindToServer()
+                .baseUrl("http://localhost:" + port)
+                .build()
+                .post()
+                .uri("/customers")
+                .body(BodyInserters.fromPublisher(Mono.just(customerDto), CustomerDto.class))
                 .exchange()
                 .expectStatus()
                 .isBadRequest().expectBody(Map.class)
