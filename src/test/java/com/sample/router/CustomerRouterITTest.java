@@ -111,7 +111,7 @@ public class CustomerRouterITTest {
         customerDto.setPassword("integtest");
 
         Map result = new LinkedHashMap();
-        result.put("message", "[Field error in object 'com.sample.dto.CustomerDto' on field 'role': rejected value [null]; codes [NotBlank.com.sample.dto.CustomerDto.role,NotBlank.role,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [com.sample.dto.CustomerDto.role,role]; arguments []; default message [role]]; default message [must not be blank]]");
+        result.put("message", "role must not be blank");
 
         // WHEN & THEN
         WebTestClient.bindToServer()

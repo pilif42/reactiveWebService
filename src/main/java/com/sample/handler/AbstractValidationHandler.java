@@ -11,6 +11,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 
 import reactor.core.publisher.Mono;
 
+import static com.sample.util.StringUtil.buildErrorMessage;
 import static java.lang.String.format;
 
 public abstract class AbstractValidationHandler<T, U extends Validator> {
@@ -33,7 +34,7 @@ public abstract class AbstractValidationHandler<T, U extends Validator> {
                         return processBodyFromPost(body, request);
                     } else {
                         ErrorDto errorDto = new ErrorDto();
-                        errorDto.setMessage(errors.getAllErrors().toString());
+                        errorDto.setMessage(buildErrorMessage(errors));
                         return defaultResponse(Mono.just(errorDto));
                     }
                 });
