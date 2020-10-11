@@ -4,9 +4,13 @@ import com.sample.db.entity.Customer;
 import com.sample.db.repository.ReactiveCustomerRepository;
 import com.sample.event.CustomerCreatedEvent;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.util.retry.Retry;
+
+import java.time.Duration;
 
 @Service
 public class CustomerService {
@@ -29,6 +33,8 @@ public class CustomerService {
     public Mono<Customer> create(String email, String password, String role) {
         return reactiveCustomerRepository
                 .save(Customer.builder().email(email).role(role).password(password).build())
+                .retryWhen(Retry.fixedDelay(3, Duration.ofSeconds(20))
+                .filter(e -> e instanceof DataAccessException))
                 .doOnSuccess(customer -> publisher.publishEvent(new CustomerCreatedEvent(customer)));
     }
 }
