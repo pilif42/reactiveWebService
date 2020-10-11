@@ -126,5 +126,24 @@ public class CustomerRouterITTest {
                 .value(map -> map.equals(result), equalTo(true));
     }
 
-    // TODO Tests for Post (valid & invalid scenarios)
+    @Test
+    public void testPost_expectCreatedReturnCode() {
+        // GIVEN
+        CustomerDto customerDto = new CustomerDto();
+        customerDto.setEmail("joeblogg@gmail.com");
+        customerDto.setPassword("integtest");
+        customerDto.setRole("tester");
+
+        // WHEN & THEN
+        WebTestClient.bindToServer()
+                .baseUrl("http://localhost:" + port)
+                .build()
+                .post()
+                .uri("/customers")
+                .body(BodyInserters.fromPublisher(Mono.just(customerDto), CustomerDto.class))
+                .exchange()
+                .expectStatus()
+                .isCreated()
+                .expectHeader().valueEquals("Location", "/customers/5");    // 5 because the first 4 are created by SampleDataInitializer.
+    }
 }
