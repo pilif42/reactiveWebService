@@ -98,11 +98,7 @@ public class CustomerRouterITTest {
                 .expectStatus()
                 .isBadRequest().expectBody(Map.class)
                 .value(map -> map.equals(result), equalTo(true));
-
-        // TODO Currently getting {"timestamp":"2020-10-10T11:05:05.364+00:00","path":"/customers/a","status":400,"error":"Bad Request","message":"","requestId":"461e33e4-2"}
-        // TODO We want message to contain: a is not a Long.
     }
 
-    // TODO Test for Get /customers/a -> currently 500 as we blow up in findOne of CustomerService. Should be 400 - id is an integer.
     // TODO Tests for Post (valid & invalid scenarios)
 }
