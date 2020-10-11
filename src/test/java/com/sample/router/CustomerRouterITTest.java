@@ -1,7 +1,9 @@
 package com.sample.router;
 
 import com.sample.dto.CustomerDto;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -17,6 +19,11 @@ import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.equalTo;
 
+/**
+ * Required to ensure the POST tests run at the end. We want only 4 customers when the GET All is called. And the 5th item
+ * must be created by our first valid POST.
+ */
+@TestMethodOrder(MethodOrderer.Alphanumeric.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @WithMockUser
 public class CustomerRouterITTest {
