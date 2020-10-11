@@ -1,6 +1,7 @@
 package com.sample.handler;
 
 import com.sample.dto.ErrorDto;
+import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -14,6 +15,7 @@ import reactor.core.publisher.Mono;
 import static com.sample.util.StringUtil.buildErrorMessage;
 import static java.lang.String.format;
 
+@Slf4j
 public abstract class AbstractValidationHandler<T, U extends Validator> {
 
     private final Class<T> classToValidate;
