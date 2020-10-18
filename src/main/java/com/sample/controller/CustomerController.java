@@ -24,7 +24,7 @@ import java.util.function.Function;
 @RestController
 @RequestMapping("/annotatedCustomers")
 public class CustomerController {
-    private static Function<Customer, CustomerDto> customerMapper = customer -> {
+    private static Function<Customer, CustomerDto> toCustomerDto = customer -> {
         CustomerDto customerDto = new CustomerDto();
         customerDto.setId(customer.getId());
         customerDto.setEmail(customer.getEmail());
@@ -37,26 +37,18 @@ public class CustomerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Long createCustomer(@RequestBody CustomerDto customerDto) {
+    public Mono<CustomerDto> createCustomer(@RequestBody CustomerDto customerDto) {
         Mono<Customer> response = customerService.create(customerDto);
-        Mono<ServerResponse> resultTemp = Mono.from(response).flatMap(customer -> ServerResponse
-                .created(URI.create("/customers/" + customer.getId()))
-                .contentType(MediaType.APPLICATION_JSON)
-                .build()
-        );
-        ServerResponse serverResponse = resultTemp.block();
-
-        Long result = 5l;
-        return result;
+        return response.map(toCustomerDto);
     }
 
     @GetMapping
     public Flux<CustomerDto> getAllCustomers() {
-        return customerService.findAll().map(customerMapper);
+        return customerService.findAll().map(toCustomerDto);
     }
 
     @GetMapping("/{id}")
     public Mono<CustomerDto> getOneCustomer(@PathVariable("id") Long id) {
-        return customerService.findOne(id).map(customerMapper);
+        return customerService.findOne(id).map(toCustomerDto);
     }
 }
