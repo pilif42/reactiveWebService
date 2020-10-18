@@ -25,7 +25,6 @@ public class CustomerControllerITTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(List.class);
-
         // TODO Detailed assertions on the body.
     }
 
@@ -37,9 +36,12 @@ public class CustomerControllerITTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(String.class);
-
-        // TODO Detailed assertions on the body.
+                .expectBody()
+                .jsonPath("$.id").isEqualTo(customerId)
+                .jsonPath("$.password").isEqualTo("tester123")
+                .jsonPath("$.role").isEqualTo("Tester")
+                .jsonPath("$.email").isNotEmpty()
+        ;
     }
 
     @Test
@@ -48,8 +50,7 @@ public class CustomerControllerITTest {
                 .get().uri("/annotatedCustomers/5")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
-                .expectStatus().isNotFound();
-
-        // TODO Detailed assertions on the body.
+                .expectStatus().isNotFound()
+                .expectBody().jsonPath("$.message").isEqualTo("No customer found for id 5");
     }
 }
