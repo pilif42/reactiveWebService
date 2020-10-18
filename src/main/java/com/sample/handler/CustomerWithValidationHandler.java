@@ -27,7 +27,7 @@ public class CustomerWithValidationHandler extends AbstractValidationHandler<Cus
 
     @Override
     protected Mono<ServerResponse> processBodyFromPost(CustomerDto validBody, ServerRequest originalRequest) {
-        Mono<Customer> response = customerService.create(validBody.getEmail(), validBody.getPassword(), validBody.getRole());
+        Mono<Customer> response = customerService.create(validBody);
         log.debug("Handled createCustomer.");
         return defaultWriteResponse(response);
     }

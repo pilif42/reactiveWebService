@@ -2,6 +2,7 @@ package com.sample.service;
 
 import com.sample.db.entity.Customer;
 import com.sample.db.repository.ReactiveCustomerRepository;
+import com.sample.dto.CustomerDto;
 import com.sample.event.CustomerCreatedEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataAccessException;
@@ -30,9 +31,13 @@ public class CustomerService {
         return reactiveCustomerRepository.findById(id);
     }
 
-    public Mono<Customer> create(String email, String password, String role) {
+    public Mono<Customer> create(CustomerDto customerDto) {
         return reactiveCustomerRepository
-                .save(Customer.builder().email(email).role(role).password(password).build())
+                .save(Customer.builder()
+                        .email(customerDto.getEmail())
+                        .role(customerDto.getRole())
+                        .password(customerDto.getPassword())
+                        .build())
                 .retryWhen(Retry.fixedDelay(3, Duration.ofSeconds(20))
                 .filter(e -> e instanceof DataAccessException))
                 .doOnSuccess(customer -> publisher.publishEvent(new CustomerCreatedEvent(customer)));

@@ -2,6 +2,7 @@ package com.sample.service;
 
 import com.sample.db.entity.Customer;
 import com.sample.db.repository.ReactiveCustomerRepository;
+import com.sample.dto.CustomerDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,9 +34,13 @@ public class CustomerServiceITTest {
         final String emailAddress = "email@email.com";
         final String password = "pwd";
         final String role = "tester";
+        CustomerDto customerDto = new CustomerDto();
+        customerDto.setEmail(emailAddress);
+        customerDto.setPassword(password);
+        customerDto.setRole(role);
 
         // WHEN
-        Mono<Customer> customerMono = customerService.create(emailAddress, password, role);
+        Mono<Customer> customerMono = customerService.create(customerDto);
 
         // THEN
         StepVerifier
