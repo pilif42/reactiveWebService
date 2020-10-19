@@ -8,8 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.util.List;
-
 import static java.lang.String.format;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -24,8 +22,8 @@ public class CustomerControllerITTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(List.class);
-        // TODO Detailed assertions on the body.
+                .expectBody()
+                .json("[{\"id\":1,\"email\":\"A@email.com\",\"password\":\"tester123\",\"role\":\"Tester\"},{\"id\":2,\"email\":\"B@email.com\",\"password\":\"tester123\",\"role\":\"Tester\"},{\"id\":3,\"email\":\"C@email.com\",\"password\":\"tester123\",\"role\":\"Tester\"},{\"id\":4,\"email\":\"D@email.com\",\"password\":\"tester123\",\"role\":\"Tester\"}]");
     }
 
     @ParameterizedTest
